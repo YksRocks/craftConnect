@@ -3,7 +3,7 @@ import ProjectIdeas from "../../components/ProjectIdeas/ProjectIdeas";
 import OnGoingHirings from "../../components/OnGoingHirings/OnGoingHirings";
 import Headings from "../../components/Headings/Headings";
 import { useCallback, useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../api/axios";
 import { Link } from "react-router-dom";
 
 function Hero() {
@@ -12,7 +12,7 @@ function Hero() {
   const fetchData = useCallback(async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/project/top-ranked`
+        `/project/top-ranked`
       );
       setRankers(response.data);
       // console.log(response.data);

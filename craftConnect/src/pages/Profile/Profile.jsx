@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import axios from "axios";
+import axios from "../../api/axios";
 import { BiUpvote } from "react-icons/bi";
 import AddProjectForm from "../../components/AddProject/AddProjectForm";
 import EditProjectForm from "../../components/EditProjectForm/EditProjectForm";
@@ -13,7 +13,7 @@ function Profile() {
   const fetchData = useCallback(async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/user/profile/${id}`
+        `/user/profile/${id}`
       );
 
       setUser(response.data);
@@ -26,7 +26,7 @@ function Profile() {
 
   const handleDelete = async (projectId) => {
     const response = await fetch(
-      `http://localhost:3000/api/project/${id}/${projectId}`,
+      `/project/${id}/${projectId}`,
       {
         method: "DELETE",
         credentials: "include", // Include cookies for authentication
