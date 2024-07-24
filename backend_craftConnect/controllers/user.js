@@ -1,8 +1,8 @@
 import User from "../models/users.js";
-import bcrypt from "bcrypt";
+// import bcrypt from "bcrypt";
 import Project from "../models/projects.js";
-import Portfolio from "../models/portfolio.js";
-import Upvote from "../models/Upvote.js";
+// import Portfolio from "../models/portfolio.js";
+// import Upvote from "../models/upvote.js";
 // export const register = async (req, res) => {
 //   try {
 //     const { username, email, password } = req.body;
