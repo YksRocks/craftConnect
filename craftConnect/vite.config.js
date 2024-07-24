@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()], 
   build: {
     rollupOptions: {
-      external: ["react", "react-dom"], // Externalize React and ReactDOM
+      external: ["react", "react-dom","react-router-dom"], // Externalize React and ReactDOM
     },
   },
 })
