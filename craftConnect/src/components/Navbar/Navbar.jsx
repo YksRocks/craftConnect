@@ -1,7 +1,25 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useNavigation } from "react-router-dom";
 import LogoutButton from "../LogoutButton/LogoutButton";
+import { jwtDecode } from "jwt-decode";
 
 function Navbar() {
+  const history = useNavigate();
+  const userProfile = () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      return history(`/login`);
+    }
+
+    try {
+      const decoded = jwtDecode(token);
+      history(`/${decoded.userId}`);
+    } catch (error) {
+      console.error("Failed to decode token:", error);
+      return null;
+    }
+  };
+
   return (
     <div className="fixed flex w-full justify-between items-center px-20 py-7 bg-black text-white">
       <div className="font-bold text-xl">
@@ -13,7 +31,7 @@ function Navbar() {
           <li>Dashboard</li>
           <li>Most Liked</li>
           {/* top rated */}
-          <li>Profile</li>
+          <li onClick={userProfile}>Profile</li>
           <Link to={"/login"}>Login</Link>
           <Link to={"/register"}>Register</Link>
           <LogoutButton />

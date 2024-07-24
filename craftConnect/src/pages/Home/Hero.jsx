@@ -15,7 +15,6 @@ function Hero() {
         `/project/top-ranked`
       );
       setRankers(response.data);
-      // console.log(response.data);
     } catch (error) {
       console.error("Error fetching top-ranked projects:", error);
     }

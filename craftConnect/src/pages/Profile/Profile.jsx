@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import axios from "../../api/axios";
+import axios from "axios";
 import { BiUpvote } from "react-icons/bi";
 import AddProjectForm from "../../components/AddProject/AddProjectForm";
 import EditProjectForm from "../../components/EditProjectForm/EditProjectForm";
+import EditUserForm from "../../components/EditUserForm/EditUserForm";
 function Profile() {
   const { id } = useParams();
   const [user, setUser] = useState();
@@ -13,12 +14,10 @@ function Profile() {
   const fetchData = useCallback(async () => {
     try {
       const response = await axios.get(
-        `/user/profile/${id}`
+        `http://localhost:3000/api/user/profile/${id}`
       );
 
       setUser(response.data);
-      console.log(response.data);
-      // console.log(response.data.JSON.toString());
     } catch (error) {
       console.error("Error fetching events :(");
     }
@@ -26,7 +25,7 @@ function Profile() {
 
   const handleDelete = async (projectId) => {
     const response = await fetch(
-      `/project/${id}/${projectId}`,
+      `http://localhost:3000/api/project/${id}/${projectId}`,
       {
         method: "DELETE",
         credentials: "include", // Include cookies for authentication
@@ -62,6 +61,7 @@ function Profile() {
   return (
     <div className="pt-24">
       <div className="flex flex-col">
+        <EditUserForm currentUser={user?.user} />
         <h1>{user?.user.username}</h1>
         <p>{user?.user.role}</p>
         <p>{user?.user.bio}</p>
