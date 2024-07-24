@@ -1,22 +1,5 @@
 import User from "../models/users.js";
-// import bcrypt from "bcrypt";
 import Project from "../models/projects.js";
-// import Portfolio from "../models/portfolio.js";
-// import Upvote from "../models/upvote.js";
-// export const register = async (req, res) => {
-//   try {
-//     const { username, email, password } = req.body;
-//     const user = new User({ username, email, password });
-//     await user.save();
-//     res.status(201).json({ message: "User registered successfully" });
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
-
-// export const login = (req, res) => {
-//   res.status(200).json({ message: "Logged in successfully", user: req.user });
-// };
 
 export const getProfile = async (req, res) => {
   try {
@@ -65,5 +48,39 @@ export const getProfile = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
+  }
+};
+export const updateProfile = async (req, res) => {
+  try {
+    if (!req.user) {
+      return res.status(403).json({
+        message: "You are not authorized to update other users profile",
+      });
+    }
+    if (req.body.currentUser !== req.user.userId) {
+      return res.status(403).json({
+        message: "You are not authorized to edit other users profile",
+      });
+    }
+
+    const { formData } = req.body;
+
+    const user = await User.findById(req.user.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update user fields
+    if (formData.username) user.username = formData.username;
+    if (formData.email) user.email = formData.email;
+    if (formData.bio) user.bio = formData.bio;
+    if (formData.role) user.role = formData.role;
+
+    await user.save();
+
+    res.json({ message: "User details updated successfully", user });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };

@@ -1,5 +1,4 @@
 import Project from "../models/projects.js";
-import Portfolio from "../models/portfolio.js";
 import Comment from "../models/comments.js";
 import User from "../models/users.js";
 
@@ -49,7 +48,11 @@ export const getTopRankedProjects = async (req, res) => {
 export const addProject = async (req, res) => {
   try {
     const { userId, title, description, link } = req.body;
-
+    if (userId !== req.user.userId) {
+      return res.status(403).json({
+        message: "You are not authorized to add project on others profile",
+      });
+    }
     // Ensure the portfolio belongs to the user
     // const portfolio = await Portfolio.findOne({
     //   _id: portfolioId,
@@ -96,7 +99,7 @@ export const deleteProject = async (req, res) => {
 
     // Ensure the user is the owner of the project
 
-    if (project.user._id !== id.toString()) {
+    if (project.user._id.toString() !== req.user.userId) {
       return res.status(403).json({
         message: "You are not authorized to delete this project",
       });
@@ -127,7 +130,7 @@ export const updateProject = async (req, res) => {
 
     // Ensure the user is the owner of the project
 
-    if (project.user._id !== id.toString()) {
+    if (project.user._id.toString() !== req.user.userId) {
       return res
         .status(403)
         .json({ message: "You are not authorized to edit this project" });
@@ -166,7 +169,6 @@ export const getProject = async (req, res) => {
       "user",
       "username"
     );
-    // console.log(project.portfolio.user._id);
     const user = await User.findById(project.user._id).select(
       "username role bio"
     );
@@ -180,6 +182,11 @@ export const getProject = async (req, res) => {
 
 export const upvoteProject = async (req, res) => {
   try {
+    if (!req.user) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to upvote until you login" });
+    }
     const { projectId } = req.params;
     const project = await Project.findById(projectId);
 
@@ -195,13 +202,17 @@ export const upvoteProject = async (req, res) => {
       upvotes: project.upvotes,
     });
   } catch (error) {
-    // console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
 
 export const addComment = async (req, res) => {
   try {
+    if (!req.user) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to upvote until you login" });
+    }
     const { projectId } = req.params;
     const { content } = req.body;
     const userId = req.user.userId;
