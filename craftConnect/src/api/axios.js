@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: "https://craftconnect-c5w4.onrender.com/api",
   withCredentials: true, // This will send the cookies along with requests
 });
 
