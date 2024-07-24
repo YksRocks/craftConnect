@@ -1,6 +1,6 @@
 // controllers/auth.js
 import jwt from "jsonwebtoken";
-import User from "../models/Users.js";
+import User from "../models/users.js";
 
 // Register user
 export const register = async (req, res) => {

@@ -1,6 +1,6 @@
-import Project from "../models/Projects.js";
-import Comment from "../models/Comments.js";
-import Upvote from "../models/Upvote.js";
+import Project from "../models/projects.js";
+import Comment from "../models/comments.js";
+import Upvote from "../models/upvote.js";
 
 export const getDashboardData = async (req, res) => {
   try {

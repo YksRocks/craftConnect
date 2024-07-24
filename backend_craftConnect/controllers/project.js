@@ -1,7 +1,7 @@
-import Project from "../models/Projects.js";
+import Project from "../models/projects.js";
 import Portfolio from "../models/portfolio.js";
-import Comment from "../models/Comments.js";
-import User from "../models/Users.js";
+import Comment from "../models/comments.js";
+import User from "../models/users.js";
 
 export const getTopRankedProjects = async (req, res) => {
   try {

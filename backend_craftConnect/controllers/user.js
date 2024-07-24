@@ -1,6 +1,6 @@
-import User from "../models/Users.js";
+import User from "../models/users.js";
 import bcrypt from "bcrypt";
-import Project from "../models/Projects.js";
+import Project from "../models/projects.js";
 import Portfolio from "../models/portfolio.js";
 import Upvote from "../models/Upvote.js";
 // export const register = async (req, res) => {
