@@ -84,7 +84,7 @@ function Profile() {
     }
   };
 
-  const handleUpdate = () => {
+  const handleUpdate = (updatedProject) => {
     setProjects(
       projects.map((project) =>
         project._id === updatedProject._id ? updatedProject : project
